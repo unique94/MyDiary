@@ -1,0 +1,2 @@
+# MyDiary
+a myself blog
