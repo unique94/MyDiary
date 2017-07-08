@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Clean Blog</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="/static/vendor/bootstrap/css/bootstrap.css" rel="stylesheet">
+
+    <!-- Theme CSS -->
+    <link href="/static/css/clean-blog.min.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="/static/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header page-scroll">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    Menu <i class="fa fa-bars"></i>
+                </button>
+                <a class="navbar-brand" href="/">Start Bootstrap</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+                    <li>
+                        <a href="#2">About</a>
+                    </li>
+                    <li>
+                        <a href="#3">Sample Post</a>
+                    </li>
+                    <li>
+                        <a href="#4">Contact</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+
+    <!-- Page Header -->
+    <!-- Set your background image for this header on the line below. -->
+    <header class="intro-header" style="background-image: url('/static/img/home-bg.jpg')">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <div class="site-heading">
+                        <h1>Hello, master</h1>
+                        <hr class="small">
+                        <span class="subheading">A myself diary</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+
+    {% if user %}
+    <!-- Main Content -->
+    <div class="container" id="vm">
+
+      <ul class="nav nav-pills">
+        <h3><a href="/manage/blogs/create"><span class="label label-primary">新日志</span></a></h3>
+      </ul>
+
+      <hr>
+
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th>标题/摘要</th>
+            <th>创作时间</th>
+            <th>操作</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="blog in blogs">
+            <td>
+              <a v-text="blog.name" :href="'/blog/'+blog.id"></a>
+            </td>
+            <td>
+              <span v-text="blog.created_at.toDateTime()" ><span>
+            </td>
+            <td>
+              <a :href="'/manage/blogs/edit?id=' + blog.id" ><i class="glyphicon glyphicon-pencil"></i>
+              <a href="" @click='delete_blog(blog)'><i class="glyphicon glyphicon-trash"></i>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <hr>
+
+      <!-- Pager -->
+        <ul class="pager">
+              <li class="previous" id="previous_button" style="display:none" >
+                <a href="">&larr; Recent Posts</a>
+              </li>
+              <li class="next" id="next_button" style="display:none" >
+                <a href="">Older Posts &rarr;</a>
+              </li>
+        </ul>
+
+    </div>
+    {% else %}
+
+    <!-- Main Content -->
+    <div class="container">
+
+      <form id="login" >
+        <div class="form-group">
+          <label for="exampleInputEmail1">Email address</label>
+          <input v-model='email' type="email" class="form-control" id="exampleInputEmail1" placeholder="Email">
+        </div>
+        <div class="form-group">
+          <label for="exampleInputPassword1">Password</label>
+          <input v-model='passwd' type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+        </div>
+        <button @click='submit' type="submit" class="btn btn-default">Submit</button>
+      </form>
+
+    </div>
+
+    {% endif %}
+
+    <hr>
+
+    <!-- Footer -->
+    {% include 'foot.html' %}
+
+    <!-- jQuery -->
+    <script src="/static/vendor/jquery/jquery.min.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="/static/vendor/bootstrap/js/bootstrap.min.js"></script>
+
+    <!-- Contact Form JavaScript -->
+    <script src="/static/js/jqBootstrapValidation.js"></script>
+    <script src="/static/js/contact_me.js"></script>
+
+    <script src="/static/js/sha1.min.js"></script>
+    <!-- Theme JavaScript -->
+    <script src="/static/js/clean-blog.min.js"></script>
+
+    <script src="/static/js/vue.min.js"></script>
+
+
+    {% if user %}
+    <script src="/static/js/mydiary.js"></script>
+
+
+    <script>
+      function initVM(data){
+        var vm = new Vue({
+          el: '#vm',
+          data:{
+            blogs: data.blogs,
+            page: data.page,
+          },
+          methods:{
+            delete_blog: function (blog){
+              if(confirm('确认要删除"' + blog.name + '"? 删除后不可恢复!')){
+                $.post('/api/manage/blogs/'+ blog.id + '/delete', blog.id, function(data){
+                  refresh();
+                })
+              }
+            }
+          }
+        });
+      };
+
+      function setPage(page){
+        if(page.has_previous){
+          $("#previous_button").show();
+          var previous = "/manage?page=" + (page.page_index - 1);
+          $("#previous_button").find("a").attr("href",previous );
+        };
+        if(page.has_next){
+          $("#next_button").show();
+          var next = "/manage?page=" + (page.page_index + 1);
+          $("#next_button").find("a").attr("href",next );
+
+        };
+      };
+
+      $(function(){
+        $.get("/api/manage/blogs", {
+          page: {{ page_index }}
+        }, function(data) {
+            initVM(data);
+            setPage(data.page);
+          }
+        )
+      });
+    </script>
+
+    {% else %}
+
+    <script>
+      $(function(){
+        var vm = new Vue({
+          el: '#login',
+          data: {
+            email: '',
+            passwd:''
+          },
+          methods:{
+            submit: function(event){
+              event.preventDefault();
+              var
+                email = this.email.trim().toLowerCase(),
+                data = {
+                  email: email,
+                  passwd: this.passwd === ''?'' : CryptoJS.SHA1(email+':'+this.passwd).toString()
+                }
+              $.post("/api/manage/authenticate", data, function(data){
+                location.assign('/manage')
+              });
+            }
+          }
+
+        });
+      })
+    </script>
+
+    {% endif %}
+
+
+</body>
+
+</html>

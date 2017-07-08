@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Clean Blog</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="/static/vendor/bootstrap/css/bootstrap.css" rel="stylesheet">
+
+    <!-- Theme CSS -->
+    <link href="/static/css/clean-blog.min.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="/static/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+
+    </head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header page-scroll">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    Menu <i class="fa fa-bars"></i>
+                </button>
+                <a class="navbar-brand" href="/">Start Bootstrap</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+                    <li>
+                        <a href="#2">About</a>
+                    </li>
+                    <li>
+                        <a href="#3">Sample Post</a>
+                    </li>
+                    <li>
+                        <a href="#4">Contact</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+
+    <!-- Page Header -->
+    <!-- Set your background image for this header on the line below. -->
+    <header class="intro-header" style="background-image: url('/static/img/home-bg.jpg')">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <div class="site-heading">
+                        <h1>create a new blog</h1>
+                        <hr class="small">
+                        <span class="subheading">A myself diary</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+
+    <!-- Main Content -->
+    <div class="container">
+        <form class="form-horizontal" id="vm">
+          <div class="form-group">
+            <label for="BlogName" class="col-sm-2 control-label">Name</label>
+            <div class="col-sm-10">
+              <input v-model='name' type="text" class="form-control" id="name" placeholder="Blog Name">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="BlogSummary" class="col-sm-2 control-label">Summary</label>
+            <div class="col-sm-10">
+              <input v-model="summary" type="text" class="form-control" id="summary" placeholder="Blog Summary">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="BlogLabel" class="col-sm-2 control-label">Label</label>
+            <div class="col-sm-10">
+              <span class="label label-info">hello</span>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <ul class="nav nav-pills col-sm-offset-2">
+                <h3><a id="transform" class="label label-primary" @click="transform">预览</a></h3>
+                <h3><a id="eedit" class="label label-primary" style="display:none" @click="eedit">编辑</a></h3>
+            </ul>
+            <div class="col-sm-10 col-sm-offset-2">
+              <textarea id="blog_edit" v-model="content" rows="30" class="form-control" id="content"></textarea>
+              <div id="markdown" style="display:none"></div>
+            </div>
+
+          </div>
+
+          <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+              <button @click='submit' type="submit" class="btn btn-default">保存</button>
+            </div>
+          </div>
+        </form>
+   </div>
+
+
+    <hr>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <ul class="list-inline text-center">
+                        <li>
+                            <a href="#">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                    </ul>
+                    <p class="copyright text-muted">Copyright &copy; Your Website 2016</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- jQuery -->
+    <script src="/static/vendor/jquery/jquery.min.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="/static/vendor/bootstrap/js/bootstrap.min.js"></script>
+
+;
+    <!-- Contact Form JavaScript -->
+    <script src="/static/js/jqBootstrapValidation.js"></script>
+    <script src="/static/js/contact_me.js"></script>
+
+    <script src="/static/js/sha1.min.js"></script>
+    <!-- Theme JavaScript -->
+    <script src="/static/js/clean-blog.min.js"></script>
+
+    <script src="/static/js/vue.min.js"></script>
+
+
+
+    <script>
+      $(function(){
+          var vm = new Vue({
+          el : '#vm',
+          data: {
+            name: '',
+            summary:'',
+            content:'',
+          },
+          methods:{
+            submit: function() {
+                data = {
+                  name: this.name,
+                  summary: this.summary,
+                  content: this.content
+                };
+                $.post("/api/manage/blogs/create", data, function(data) {
+                  location.assign('/manage')
+                });
+            },
+            transform:function(){
+                data = {
+                  text: this.content
+                };
+                $.ajax({
+                  type: "POST",
+                  url: "/api/manage/blogs/create/text2html",
+                  data: data,
+                  dataType: "html",
+                  success: function(data){
+                    $("#transform").hide();
+                    $("#blog_edit").hide();
+                    $("#eedit").show();
+                    $("#markdown").html(data);
+                    $("#markdown").show();
+                  }
+                });
+            },
+            eedit: function(){
+                $("#transform").show();
+                $("#blog_edit").show();
+                $("#eedit").hide();
+                $("#markdown").hide();
+            }
+          }
+        });
+
+      })
+    </script>
+
+
+</body>
+
+</html>
