@@ -33,15 +33,6 @@ class Blog(Model):
     created_at = FloatField(default=time.time)
     label_id = StringField(ddl='varchar(500)')
 
-class Label(Model):
-    __table__ = 'labels'
-
-    id = StringField(primary_key=True, default=next_id, ddl='varchar(50)')
-    name = StringField(ddl='varchar(50)')
-    attr = StringField(ddl='varchar(100)')
-    created_at = FloatField(default=time.time)
-
-
 
 class Comment(Model):
     __table__ = 'comments'

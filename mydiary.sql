@@ -81,31 +81,6 @@ LOCK TABLES `comments` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `labels`
---
-
-DROP TABLE IF EXISTS `labels`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `labels` (
-  `id` varchar(50) NOT NULL,
-  `name` varchar(50) NOT NULL,
-  `attr` varchar(100) NOT NULL DEFAULT 'label label-default',
-  `created_at` double NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `labels`
---
-
-LOCK TABLES `labels` WRITE;
-/*!40000 ALTER TABLE `labels` DISABLE KEYS */;
-/*!40000 ALTER TABLE `labels` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `users`
 --
 

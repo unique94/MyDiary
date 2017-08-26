@@ -2,7 +2,7 @@ import asyncio, time, logging, hashlib, json, mistune
 
 from coroweb import get, post
 
-from models import User, Blog, Label
+from models import User, Blog
 
 from apis import APIValueError, APIPermissionError, Page
 
@@ -53,18 +53,9 @@ async def index(request,*, page='1'):
     nums = await Blog.findNumber('count(id)')
     p = Page(nums, page_index)
     blogs = await Blog.findAll(orderBy='created_at desc', limit=(p.offset, p.limit))
-    labels = {}
-    for blog in blogs:
-        label_id_list = blog.label_id.split(';')
-        blog.label_id = label_id_list
-        for label_id in label_id_list:
-            if label_id not in labels:
-                label = await Label.find(label_id)
-                labels[label_id] = {'label_name':label.name,'label_attr':label.attr}
     return {
         '__template__': 'index.html',
         'blogs': blogs,
-        'labels':labels,
         'page': p
     }
 
@@ -81,19 +72,9 @@ def aboutme():
 async def get_blog(*, id):
     blog = await Blog.find(id)
 
-    label_id_list = blog.label_id.split(';')
-
-    labels = dict()
-    for label_id in label_id_list:
-        if label_id not in labels:
-            label = await Label.find(label_id)
-            labels[label_id] = {'label_name':label.name,'label_attr':label.attr}
-
 
     return {
         '__template__': 'blog.html',
-        'label_id_list': label_id_list,
-        'labels': labels,
         'id': id
     }
 

@@ -65,11 +65,7 @@
                             </h2>
                         </a>
 
-                        <h4 class="post-subtitle">
-                            {% for label_id in blog.label_id %}
-                            <span class="{{ labels[label_id].label_attr}}">{{ labels[label_id].label_name }}</span>
-                            {% endfor %}
-                        </h4>
+                        <p>{{blog.summary}}</p>
 
                         <p class="post-meta">创建于 {{ blog.created_at | datetime }}</p>
                     </div>
